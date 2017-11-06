@@ -60,10 +60,7 @@ class DFRobot_Display : public Print
     virtual void        drawBuffer_24(int16_t x, int16_t y, uint8_t *pBuf, uint16_t count);
     virtual void        drawBuffer_16(int16_t x, int16_t y, uint16_t *pBuf, uint16_t count);
 
-	int32_t             readN(Stream * s, uint8_t* pBuf, int32_t length);
-	int16_t             drawBmp(Stream *s, int16_t x, int16_t y);
-    size_t              write(uint8_t ch);
-    size_t              write(const uint8_t* pCh, size_t size);
+    int16_t             drawBmp(Stream *s, int16_t x, int16_t y);
 		
     eROTATION    getRotation(void);
     void         setTextColor(uint16_t color);
@@ -72,11 +69,12 @@ class DFRobot_Display : public Print
     uint8_t      getTextSize(void);
     int16_t      getWidth(void);
     int16_t      getHeight(void);
-    void         setCursor(uint16_t x, uint16_t y);
+    void         setCursor(int16_t x, int16_t y);
     void         getCursor(int16_t* pX, int16_t* pY);
     eSHAPE       getDisplayShape(void);
-    uint16_t     getDisplayRadius(void);
-    void         setOrign(uint16_t x, uint16_t y);
+    int16_t      getDisplayRadius(void);
+    void         setOrign(int16_t x, int16_t y);
+    void         getOrign(int16_t* pX, int16_t* pY);
     void         supportChineseFont(void);
 
   protected:
@@ -100,6 +98,9 @@ class DFRobot_Display : public Print
     void         circleHelper(int16_t x0, int16_t y0,
 			                        int16_t r, uint8_t part, uint16_t color);
     int16_t      drawText(int16_t* pX, int16_t* pY, const char* ch);
+    int32_t      readN(Stream * s, uint8_t* pBuf, int32_t length);
+    size_t       write(uint8_t ch);
+    size_t       write(const uint8_t* pCh, size_t size);
 
   private:
     int16_t      printfX, printfY;
