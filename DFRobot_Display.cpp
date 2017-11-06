@@ -640,7 +640,7 @@ int16_t DFRobot_Display::getHeight(void)
 void DFRobot_Display::setDisplayShape(eSHAPE eShape)
 {
   switch(eShape) {
-    case eSHAPE_CIRCLE: eShape = eSHAPE_CIRCLE; break;
+    case eSHAPE_CIRCLE: eShape = eSHAPE_CIRCLE; displayRadius = width / 2; break;
     case eSHAPE_RECT: eShape = eSHAPE_RECT; break;
   }
 }
@@ -652,7 +652,16 @@ eSHAPE DFRobot_Display::getDisplayShape(void)
 }
 
 
-void DFRobot_Display::setCursor(uint16_t x, uint16_t y)
+int16_t DFRobot_Display::getDisplayRadius(void)
+{
+  if(eShape == eSHAPE_CIRCLE) {
+    return displayRadius;
+  }
+  return 0;
+}
+
+
+void DFRobot_Display::setCursor(int16_t x, int16_t y)
 {
   if(x > width) {
     printfX = width;
@@ -679,7 +688,8 @@ void DFRobot_Display::supportChineseFont(void)
     pfCharacterFont = GT30L_getCharacter;
 }
 
-void DFRobot_Display::setOrign(uint16_t x, uint16_t y)
+
+void DFRobot_Display::setOrign(int16_t x, int16_t y)
 {
   if(x > width) {
     cursorX = width;
@@ -691,6 +701,12 @@ void DFRobot_Display::setOrign(uint16_t x, uint16_t y)
   } else {
     cursorY = y;
   }
+}
+
+
+void DFRobot_Display::getOrign(int16_t* pX, int16_t* pY)
+{
+  *pX = printfX; *pY = printfY;
 }
 
 
