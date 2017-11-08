@@ -18,6 +18,7 @@
 #define DISPLAY_ERR                   -1
 #define DISPLAY_ERR_PARAM             -2
 #define DISPLAY_ERR_NOTSUPPORT        -3
+#define DISPLAY_ERR_MEMOVER           -4
 
 #define DISPLAY_WAR_OUTRANGE  1
 
