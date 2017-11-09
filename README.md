@@ -26,8 +26,8 @@ Enable figures-drawing in the screen and many configurable functions are availab
 
 ## Feature
 
---Support different drawings in the screen, including point, line, circle, fill circle, 
---rectangle, fill rectangle, triangle, fill triangle, rounded rectangle, fill rounded rectangle. 
+--Support different drawings in the screen, including point, line, circle, fill circle,
+  rectangle, fill rectangle, triangle, fill triangle, rounded rectangle, fill rounded rectangle.
 --English fonts or character library chips are configurable.
 --Read and display BMP file in SD card.
 --The library can be drived by basic hardware programs of drawPixel, fillScreen and begin.
