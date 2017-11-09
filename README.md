@@ -45,7 +45,7 @@ Functions supports. <0 means error;>0 means warning, 0 means OK .
 function type
 
     Value       |             Result            <br>
-----------------|-------------------------------<br>
+------------------------------------------------<br>
     -4          |         mem overflow          <br>
     -3          |          not support          <br>
     -2          |             param             <br>
