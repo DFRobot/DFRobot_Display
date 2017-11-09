@@ -1,5 +1,6 @@
 # Display
-This is a base class library of the device display to store drawing methods of basic figures;many display device of DFRobot depend on it.   
+This is a base class library of the device display to store drawing methods of basic figures;
+many display device of DFRobot depend on it.   
 
 ## DFRobot_Display Library for Arduino
 ---------------------------------------------------------
@@ -10,7 +11,7 @@ Provide a library faciltates drawing in majority screens.
 * [Summary](#summary)
 * [Feature](#feature)
 * [Installation](#installation)
-* [Result table](#result table)
+* [Result](#result)
 * [Methods](#methods)
 
 * [History](#history)
@@ -36,7 +37,7 @@ Enable figures-drawing in the screen and many configurable functions are availab
 Download the library ZIP file and unzip it to the Arduino folder of the library.
 SPI_SD interface is available, compatible SD card libraries of ESP32 and ESP8266(https://github.com/DFRobot/SD_SPI) are added.
 
-## Result table
+## Result
 
 Functions supports. <0 means error;>0 means warning, 0 means OK .
  
@@ -54,7 +55,8 @@ function type
 
 #include "DFRobot_ILI9488_SPI.h"
 
-Except special instructions, all axis as below are relative to the source node , color represents 16 bits 565 color data 
+Except special instructions, all axis as below are relative to the source node , 
+color represents 16 bits 565 color data 
 
 //color define 
 #define DISPLAY_BLACK       0x0000      /*   0,   0,   0 */
