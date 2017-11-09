@@ -40,14 +40,8 @@ SPI_SD interface is available, compatible SD card libraries of ESP32 and ESP8266
 
 ## Result
 
-MCU                | Work Well    | Work Wrong   | Untested    | Remarks
------------------- | :----------: | :----------: | :---------: | -----
-FireBeetle-ESP32   |      √       |              |             | 
-FireBeetle-ESP8266 |      √       |              |             | 
-FireBeetle-BLE4.1  |      √       |              |             | 
-<br>
     value       |           result              
-----------------|-------------------------------<br>
+----------------|-------------------------------
     -4          |         mem overflow          <br>
     -3          |          not support          <br>
     -2          |             param             <br>
