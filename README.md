@@ -40,13 +40,13 @@ SPI_SD interface is available, compatible SD card libraries of ESP32 and ESP8266
 
 ## Result
 
-    value       |           result              
-----------------|-------------------------------
-    -4          |         mem overflow          <br>
-    -3          |          not support          <br>
-    -2          |             param             <br>
-    -1          |             error             <br>
-    1           |           out range           <br>
+Value              |            Result              
+------------------ | -------------------------------------------
+     -4            |          mem overflow
+     -3            |          not support
+     -2            |          param
+     -1            |          error
+     1             |          out range
 
 ## Methods
 
