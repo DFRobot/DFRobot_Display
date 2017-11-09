@@ -1,6 +1,5 @@
 # Display
-This is a base class library of the device display to store drawing methods of basic figures;
-many display device of DFRobot depend on it.   
+This is a base class library of the display device to provide drawing methods of basic figures. Many DFRobot display device are inherited from it.
 
 ## DFRobot_Display Library for Arduino
 ---------------------------------------------------------
