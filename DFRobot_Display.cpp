@@ -124,6 +124,7 @@ int16_t DFRobot_Display::drawText(int16_t* pX, int16_t* pY, const char* ch)
     }
     *pX += textWidth * textSize;
   }
+  *pX = posX;
 }
 
 
@@ -731,28 +732,30 @@ int16_t DFRobot_Display::limitVLine(int16_t &x, int16_t &y, int16_t &h)
   x = x_;
   y = y0_;
   h = y1_-y0_+1;
+  return 0;
 }
 
 
 
 int16_t DFRobot_Display::limitHLine(int16_t & x, int16_t & y, int16_t &w)
 {
-	int16_t w_=w,x_=x,y_=y,x0_,x1_;
-	if(w < 0){
-	  w_ = -w;
-	  x_ = x- w_ + 1;
-	}
-	y_ = y + cursorY;
-	x0_ = x_ + cursorX;
-	x1_ = x0_+w_-1;
-	if((y_ < 0) || (y_ > height) ||  (x0_ > width) || (x1_ < 0)) {
-	  return -1;
-	}
-	if(x0_ < 0) x0_ = 0;
-	if(x1_ > width) x1_ = width;
-	x = x0_;
-	y = y_;
-	w = x1_-x0_+1;
+  int16_t w_=w,x_=x,y_=y,x0_,x1_;
+  if(w < 0){
+    w_ = -w;
+    x_ = x- w_ + 1;
+  }
+  y_ = y + cursorY;
+  x0_ = x_ + cursorX;
+  x1_ = x0_+w_-1;
+  if((y_ < 0) || (y_ > height) ||  (x0_ > width) || (x1_ < 0)) {
+    return -1;
+  }
+  if(x0_ < 0) x0_ = 0;
+  if(x1_ > width) x1_ = width;
+  x = x0_;
+  y = y_;
+  w = x1_-x0_+1;
+  return 0;
 }
 
 
@@ -762,8 +765,9 @@ int16_t DFRobot_Display::limitPixel(int16_t &x, int16_t &y)
   x += cursorX;
   y += cursorY;
   if((x < 0) || (y > height) ||  (x > width) || (y < 0)) {
-	return -1;
+    return -1;
   }
+  return 0;
 }
 
 
