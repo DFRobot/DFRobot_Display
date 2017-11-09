@@ -41,7 +41,7 @@ SPI_SD interface is available, compatible SD card libraries of ESP32 and ESP8266
 ## Result
 
 Value              | Result                                     |
------------------- | -------------------------------------------|
+------------------ | :----------------------------------------: |
      -4            |          mem overflow                      |
      -3            |          not support                       |
      -2            |          param                             |
