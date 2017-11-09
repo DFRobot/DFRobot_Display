@@ -1,6 +1,11 @@
-# DFRobot_Display Library for Arduino
+# Display
+
+This is a base class library of the device display to store drawing methods of basic figures;<br>
+many display device of DFRobot depend on it.   
+
+## DFRobot_Display Library for Arduino
 ---------------------------------------------------------
-This is a base class library of the display device to provide drawing methods of basic figures. Many DFRobot display device are inherited from it.
+Provide a library faciltates drawing in majority screens.
 
 ## Table of Contents
 
@@ -22,30 +27,30 @@ Enable figures-drawing in the screen and many configurable functions are availab
 
 ## Feature
 
---Support different drawings in the screen, including point, line, circle, fill circle,
-  rectangle, fill rectangle, triangle, fill triangle, rounded rectangle, fill rounded rectangle.
---English fonts or character library chips are configurable.
---Read and display BMP file in SD card.
---The library can be drived by basic hardware programs of drawPixel, fillScreen and begin.
+--Support different drawings in the screen, including point, line, circle, fill circle, <br>
+  rectangle, fill rectangle, triangle, fill triangle, rounded rectangle, fill rounded rectangle. <br>
+--English fonts or character library chips are configurable.<br>
+--Read and display BMP file in SD card.<br>
+--The library can be drived by basic hardware programs of drawPixel, fillScreen and begin.<br>
 
 ## Installation
 
-Download the library ZIP file and unzip it to the Arduino folder of the library.
+Download the library ZIP file and unzip it to the Arduino folder of the library.<br>
 SPI_SD interface is available, compatible SD card libraries of ESP32 and ESP8266(https://github.com/DFRobot/SD_SPI) are added.
 
 ## Result
 
 Functions supports. <0 means error;>0 means warning, 0 means OK .
- 
+
 function type
 
-    Value       |             Result            
---------------- |-------------------------------
-    -4          |         mem overflow          
-    -3          |          not support          
-    -2          |             param             
-    -1          |             error             
-    1           |           out range           
+    Value       |             Result            <br>
+----------------|-------------------------------<br>
+    -4          |         mem overflow          <br>
+    -3          |          not support          <br>
+    -2          |             param             <br>
+    -1          |             error             <br>
+    1           |           out range           <br>
 
 ## Methods
 
@@ -329,6 +334,13 @@ int16_t drawBmp(Stream *s, int16_t x, int16_t y);
 int16_t getWidth(void);
 
 /*
+ * @brief Get screen hight
+ *
+ * @return The  screen hight
+ */
+int16_t getHeight(void);
+
+/*
  * @brief support chinese font IC
  */
 void supportChineseFont(void);
@@ -337,7 +349,7 @@ void supportChineseFont(void);
 
 ## Compatibility
 
-MCU                | Work Well | Work Wrong | Untested  | Remarks
+MCU                | Work Well    | Work Wrong   | Untested    | Remarks
 ------------------ | :----------: | :----------: | :---------: | -----
 FireBeetle-ESP32   |      √       |              |             | 
 FireBeetle-ESP8266 |      √       |              |             | 
