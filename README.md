@@ -43,6 +43,7 @@ Functions supports. <0 means error;>0 means warning, 0 means OK .
  
 function type
     value       |             result            |
+--------------- | :---------------------------: |
     -4          |         mem overflow          |
     -3          |          not support          |
     -2          |             param             |
