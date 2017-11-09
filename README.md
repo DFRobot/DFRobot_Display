@@ -42,13 +42,13 @@ SPI_SD interface is available, compatible SD card libraries of ESP32 and ESP8266
 Functions supports. <0 means error;>0 means warning, 0 means OK .
  
 function type
-    value       |             result            |
---------------- | :---------------------------: |
-    -4          |         mem overflow          |
-    -3          |          not support          |
-    -2          |             param             |
-    -1          |             error             |
-    1           |           out range           |
+    value       |             result            
+--------------- |-------------------------------
+    -4          |         mem overflow          
+    -3          |          not support          
+    -2          |             param             
+    -1          |             error             
+    1           |           out range           
 
 ## Methods
 
