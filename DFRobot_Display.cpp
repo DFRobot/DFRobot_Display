@@ -159,10 +159,12 @@ void DFRobot_Display::drawHLine(int16_t x, int16_t y, int16_t width_, uint16_t c
 void DFRobot_Display::drawRect(int16_t x, int16_t y, int16_t width, int16_t height, 
                                        uint16_t color)
 {
+  int8_t        dirX = (width > 0) ? 0 : -1;
+  int8_t        dirY = (height > 0) ? 0 : -1;
   drawHLine(x, y, width, color);
-  drawHLine(x, y + height, width, color);
+  drawHLine(x, y + height + dirY, width, color);
   drawVLine(x, y, height, color);
-  drawVLine(x + width, y, height, color);
+  drawVLine(x + width + dirX, y, height, color);
 }
 
 
