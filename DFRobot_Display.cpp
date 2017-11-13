@@ -130,7 +130,7 @@ int16_t DFRobot_Display::drawText(int16_t* pX, int16_t* pY, const char* ch)
 
 void DFRobot_Display::drawVLine(int16_t x, int16_t y, int16_t height_, uint16_t color)
 {
-  if((x + cursorX < 0) || (x + cursorX > height)) {return;}
+  if((x + cursorX < 0) || (x + cursorX > width)) {return;}
   int8_t        direction = 1;
   int16_t       var1 = y + height_;
   if(height_ < 0) {
