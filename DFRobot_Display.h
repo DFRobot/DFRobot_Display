@@ -5,6 +5,7 @@
 #include "DFRobot_Types.h"
 #include "DFRobot_Character.h"
 #include "Print.h"
+#include "DFRobot_GT30L.h"
 
 #define DISPLAY_BLACK       0x0000      /*   0,   0,   0 */
 #define DISPLAY_NAVY        0x000F      /*   0,   0, 128 */
