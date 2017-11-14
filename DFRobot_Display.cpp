@@ -1,5 +1,4 @@
 #include "DFRobot_Display.h"
-#include "DFRobot_GT30L.h"
 
 DFRobot_Display::DFRobot_Display(uint16_t width_, uint16_t height_)
 {
