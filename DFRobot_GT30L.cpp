@@ -18,7 +18,7 @@ int16_t GT30L_getCharacter(uint8_t* pCh, uint8_t* pBuf, uint8_t* pWidth, uint8_t
       return DISPLAY_ERR_PARAM;
     }
   //utf-8 code
-  } else if((*pCh & 0xf0) == 0xe0) {
+  } else if((*pCh & 0xf0) == 0xe0 && (*(pCh + 1) & 0xc0) == 0x80 && (*(pCh + 2) & 0xc0) == 0x80) {
     var1 = (*pCh & 0x0f) << 12 | (*(pCh + 1) & 0x3f) << 6 | (*(pCh + 2) & 0x3f);
 		unicodeBuf[0] = var1 >> 8;
 		unicodeBuf[1] = var1;
