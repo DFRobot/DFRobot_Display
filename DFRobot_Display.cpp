@@ -32,9 +32,14 @@ int16_t DFRobot_Display::drawText(int16_t* pX, int16_t* pY, const char* ch)
   uint8_t       i = 0, j = 0, k = 0;
   uint8_t       var1 = 0;
   uint8_t       textWidth = 0, textHeight = 0;
-  int16_t       posX = *pX;
+#ifdef _DEBUG
   _DEBUG_PRINT("\n  drawText :");
   _DEBUG_PRINT(ch);
+  for(i = 0; i < strlen(ch); i ++) {
+    _DEBUG_PRINT(" ");
+    _DEBUG_PRINTVAR(ch[i], HEX);
+  }
+#endif
 
   while(*ch) {
     //get character
@@ -53,7 +58,7 @@ int16_t DFRobot_Display::drawText(int16_t* pX, int16_t* pY, const char* ch)
     } else {
       if(*ch > 0x06 && *ch < 0x0e) {
         if(*ch == '\n') {
-          *pX = posX;
+          *pX = 0;
           *pY += textHeight * textSize;
         }
         ch += rslt;
@@ -62,7 +67,7 @@ int16_t DFRobot_Display::drawText(int16_t* pX, int16_t* pY, const char* ch)
       ch += rslt;
       //check range
       if(*pX > rawWidth - textWidth * textSize) {
-        *pX = posX;
+        *pX = 0;
         *pY += textHeight * textSize;
       }
       if(*pY > rawHeight - textHeight * textSize) {
@@ -123,7 +128,6 @@ int16_t DFRobot_Display::drawText(int16_t* pX, int16_t* pY, const char* ch)
     }
     *pX += textWidth * textSize;
   }
-  *pX = posX;
 }
 
 
@@ -726,6 +730,7 @@ int16_t DFRobot_Display::limitVLine(int16_t &x, int16_t &y, int16_t &h)
   y1_ = y0_+h_-1;
   
   if((x_ < 0) || (x_ > width) ||  (y0_ > height) || (y1_ < 0)) {
+    _DEBUG_PRINT("\n  limitVLine faild");
   	return -1;
   }
   if(y0_ < 0) y0_ = 0;
@@ -740,22 +745,22 @@ int16_t DFRobot_Display::limitVLine(int16_t &x, int16_t &y, int16_t &h)
 
 int16_t DFRobot_Display::limitHLine(int16_t & x, int16_t & y, int16_t &w)
 {
-  int16_t w_=w,x_=x,y_=y,x0_,x1_;
-  if(w < 0){
-    w_ = -w;
-    x_ = x- w_ + 1;
-  }
-  y_ = y + cursorY;
-  x0_ = x_ + cursorX;
-  x1_ = x0_+w_-1;
-  if((y_ < 0) || (y_ > height) ||  (x0_ > width) || (x1_ < 0)) {
-    return -1;
-  }
-  if(x0_ < 0) x0_ = 0;
-  if(x1_ > width) x1_ = width;
-  x = x0_;
-  y = y_;
-  w = x1_-x0_+1;
+	int16_t w_=w,x_=x,y_=y,x0_,x1_;
+	if(w < 0){
+	  w_ = -w;
+	  x_ = x- w_ + 1;
+	}
+	y_ = y + cursorY;
+	x0_ = x_ + cursorX;
+	x1_ = x0_+w_-1;
+	if((y_ < 0) || (y_ > height) ||  (x0_ > width) || (x1_ < 0)) {
+	  return -1;
+	}
+	if(x0_ < 0) x0_ = 0;
+	if(x1_ > width) x1_ = width;
+	x = x0_;
+	y = y_;
+	w = x1_-x0_+1;
   return 0;
 }
 
