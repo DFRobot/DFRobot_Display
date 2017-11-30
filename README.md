@@ -327,6 +327,17 @@ int16_t getHeight(void);
 int16_t drawBmp(Stream *s, int16_t x, int16_t y);
 
 /*
+ * @brief Display bmp file
+ *
+ * @param pData   bmp arry list
+ *        x       The x-axis of the starting point
+ *        y       The y-axis of the starting point
+ *        w       bmp width
+ *        h       bmp height
+ */
+int16_t drawBmp(Stream *s, int16_t x, int16_t y, uint16_t w, uint16_t h, uint16_t color);
+
+/*
  * @brief invertDisplay
  *
  * @param eInvert       

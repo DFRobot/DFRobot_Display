@@ -62,6 +62,8 @@ class DFRobot_Display : public Print
     virtual void        drawBuffer_16(int16_t x, int16_t y, uint16_t *pBuf, uint16_t count);
 
     int16_t             drawBmp(Stream *s, int16_t x, int16_t y);
+    void                drawBmp(uint8_t* pData, int16_t x, int16_t y, uint16_t w, uint16_t h,
+                                uint8_t size, uint16_t color);
 		
     eROTATION    getRotation(void);
     void         setTextColor(uint16_t color);

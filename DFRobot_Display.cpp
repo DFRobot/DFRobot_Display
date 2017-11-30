@@ -24,7 +24,6 @@ size_t DFRobot_Display::write(const uint8_t* pCh, size_t size)
   return strlen((const char*)pCh);
 }
 
-
 int16_t DFRobot_Display::drawText(int16_t* pX, int16_t* pY, const char* ch)
 {
   uint8_t       characterBuffer[32] = {0};
@@ -100,13 +99,13 @@ int16_t DFRobot_Display::drawText(int16_t* pX, int16_t* pY, const char* ch)
         */
         //8 * 16 text size
         if(textHeight == 16) {
-          for(i = 0; i < 12; i ++) {
+          for(i = 0; i < 16; i ++) {
             var1 = characterBuffer[i];
             for(j = 0; j < 8; j ++) {
               if(var1 & (0x01 << j)) {
                 for(k = 0; k < textSize; k ++) {
                   drawVLine(*pX + j * textSize + k - cursorX, 
-                            *pY + i * textSize + 2 * textSize - cursorY, textSize , textColor);
+                            *pY + i * textSize - cursorY, textSize , textColor);
                 }
               }
             }
@@ -130,7 +129,6 @@ int16_t DFRobot_Display::drawText(int16_t* pX, int16_t* pY, const char* ch)
   }
 }
 
-
 void DFRobot_Display::drawVLine(int16_t x, int16_t y, int16_t height_, uint16_t color)
 {
   if((x + cursorX < 0) || (x + cursorX > width)) {return;}
@@ -143,7 +141,6 @@ void DFRobot_Display::drawVLine(int16_t x, int16_t y, int16_t height_, uint16_t 
     drawPixel(x, y, color);
   }
 }
-
 
 void DFRobot_Display::drawHLine(int16_t x, int16_t y, int16_t width_, uint16_t color)
 {
@@ -158,7 +155,6 @@ void DFRobot_Display::drawHLine(int16_t x, int16_t y, int16_t width_, uint16_t c
   }
 }
 
-
 void DFRobot_Display::drawRect(int16_t x, int16_t y, int16_t width, int16_t height, 
                                        uint16_t color)
 {
@@ -169,7 +165,6 @@ void DFRobot_Display::drawRect(int16_t x, int16_t y, int16_t width, int16_t heig
   drawVLine(x, y, height, color);
   drawVLine(x + width + dirX, y, height, color);
 }
-
 
 void DFRobot_Display::fillRect(int16_t x, int16_t y, int16_t width, int16_t height, 
                                            uint16_t color)
@@ -183,7 +178,6 @@ void DFRobot_Display::fillRect(int16_t x, int16_t y, int16_t width, int16_t heig
     drawVLine(x, y, height, color);
   }
 }
-
 
 void DFRobot_Display::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, 
                                        uint16_t color)
@@ -229,7 +223,6 @@ void DFRobot_Display::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
   }
 }
 
-
 void DFRobot_Display::drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
 {
   r = abs(r);
@@ -256,7 +249,6 @@ void DFRobot_Display::drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t col
   }
 }
 
-
 void DFRobot_Display::fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
 { 
   r = abs(r);
@@ -279,7 +271,6 @@ void DFRobot_Display::fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t col
     varX ++;
   }
 }
-
 
 void DFRobot_Display::drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, 
                                            int16_t x2, int16_t y2, uint16_t color)
@@ -365,7 +356,6 @@ void DFRobot_Display::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y
   }
 }
 
-
 void DFRobot_Display::drawRoundRect(int16_t x, int16_t y, int16_t w,
                                     int16_t h, int16_t r, uint16_t color)
 {
@@ -413,7 +403,6 @@ void DFRobot_Display::drawRoundRect(int16_t x, int16_t y, int16_t w,
   }
 }
 
-
 // fill a rounded rectangle!
 void DFRobot_Display::fillRoundRect(int16_t x, int16_t y, int16_t w,
                                         int16_t h, int16_t r, uint16_t color)
@@ -451,7 +440,6 @@ void DFRobot_Display::fillRoundRect(int16_t x, int16_t y, int16_t w,
   }
 }
 
-
 void DFRobot_Display::circleHelper(int16_t x0, int16_t y0,
                                    int16_t r, uint8_t part, uint16_t color)
 {
@@ -488,7 +476,6 @@ void DFRobot_Display::circleHelper(int16_t x0, int16_t y0,
   }
 }
 
-
 void DFRobot_Display::fillCircleHelper(int16_t x0, int16_t y0, int16_t r,
                                        uint8_t part, int16_t offset, uint16_t color)
 {
@@ -518,17 +505,17 @@ void DFRobot_Display::fillCircleHelper(int16_t x0, int16_t y0, int16_t r,
 
 int32_t DFRobot_Display::readN(Stream * s, uint8_t* pBuf, int32_t length)
 {
-    int32_t l=length;
-    if(pBuf == 0) {
-        while((length --) && (s->available())) {
-			s->read();
-		  }
-    } else {
-        while((length --) && (s->available())) {
-            *pBuf = s->read();
-            pBuf ++;
-        }
+  int32_t l=length;
+  if(pBuf == 0) {
+    while((length --) && (s->available())) {
+		  s->read();
+	  }
+  } else {
+    while((length --) && (s->available())) {
+      *pBuf = s->read();
+      pBuf ++;
     }
+  }
 	return l-length;
 }
 
@@ -542,7 +529,7 @@ int16_t DFRobot_Display::drawBmp(Stream *s, int16_t x, int16_t y)
   if(s == 0) {
     return DISPLAY_ERR;
   } else {
-	readN(s, 0, 18);
+	  readN(s, 0, 18);
     readN(s, colorBuf, 4);
     picWidth = colorBuf[0] | ((uint32_t)colorBuf[1] << 8) | ((uint32_t)colorBuf[2] << 16) | ((uint32_t)colorBuf[3] << 24);
     _DEBUG_PRINT("\n  pic width :");
@@ -588,6 +575,26 @@ int16_t DFRobot_Display::drawBmp(Stream *s, int16_t x, int16_t y)
   }
 }
 
+void DFRobot_Display::drawBmp(uint8_t* pData, int16_t x, int16_t y, uint16_t w, uint16_t h,
+                              uint8_t size, uint16_t color)
+{
+  uint16_t        i = 0, j = 0, k = 0, m = 0;
+  uint8_t         var1 = 0;
+  if((w % 8) == 0) w = w / 8;
+  else w = w / 8 + 1;
+  for(i = 0; i < h; i ++) {
+    for(j = 0; j < w; j ++) {
+      var1 = pData[i * w + j];
+      for(k = 0; k < 8; k ++) {
+        if(var1 & (0x80 >> k)) {
+          for(m = 0; m < size; m ++) {
+            drawVLine(x + k * size + 8 * j *size + m, y + i * size, size, color);
+          }
+        }
+      }
+    }
+  }
+}
 
 int16_t DFRobot_Display::setRotaion(eROTATION eRotation_)
 {
@@ -602,48 +609,40 @@ int16_t DFRobot_Display::setRotaion(eROTATION eRotation_)
   return DISPLAY_ERR_OK;
 }
 
-
 eROTATION DFRobot_Display::getRotation(void)
 {
   return eRotation;
 }
-
 
 void DFRobot_Display::setTextColor(uint16_t color)
 {
   textColor = color;
 }
 
-
 int16_t DFRobot_Display::getTextColor(void)
 {
   return textColor;
 }
-
 
 void DFRobot_Display::setTextSize(uint8_t size)
 {
   textSize = size;
 }
 
-
 uint8_t DFRobot_Display::getTextSize(void)
 {
   return textSize;
 }
-
 
 int16_t DFRobot_Display::getWidth(void)
 {
   return width;
 }
 
-
 int16_t DFRobot_Display::getHeight(void)
 {
   return height;
 }
-
 
 void DFRobot_Display::setDisplayShape(eSHAPE eShape)
 {
@@ -653,12 +652,10 @@ void DFRobot_Display::setDisplayShape(eSHAPE eShape)
   }
 }
 
-
 eSHAPE DFRobot_Display::getDisplayShape(void)
 {
   return eShape;
 }
-
 
 int16_t DFRobot_Display::getDisplayRadius(void)
 {
@@ -667,7 +664,6 @@ int16_t DFRobot_Display::getDisplayRadius(void)
   }
   return 0;
 }
-
 
 void DFRobot_Display::setCursor(int16_t x, int16_t y)
 {
@@ -683,19 +679,16 @@ void DFRobot_Display::setCursor(int16_t x, int16_t y)
   }
 }
 
-
 void DFRobot_Display::getCursor(int16_t* pX, int16_t* pY)
 {
   *pX = cursorX;
   *pY = cursorY;
 }
 
-
 void DFRobot_Display::supportChineseFont(void)
 {
     pfCharacterFont = GT30L_getCharacter;
 }
-
 
 void DFRobot_Display::setOrign(int16_t x, int16_t y)
 {
@@ -711,12 +704,10 @@ void DFRobot_Display::setOrign(int16_t x, int16_t y)
   }
 }
 
-
 void DFRobot_Display::getOrign(int16_t* pX, int16_t* pY)
 {
   *pX = printfX; *pY = printfY;
 }
-
 
 int16_t DFRobot_Display::limitVLine(int16_t &x, int16_t &y, int16_t &h)
 {
@@ -741,8 +732,6 @@ int16_t DFRobot_Display::limitVLine(int16_t &x, int16_t &y, int16_t &h)
   return 0;
 }
 
-
-
 int16_t DFRobot_Display::limitHLine(int16_t & x, int16_t & y, int16_t &w)
 {
 	int16_t w_=w,x_=x,y_=y,x0_,x1_;
@@ -764,8 +753,6 @@ int16_t DFRobot_Display::limitHLine(int16_t & x, int16_t & y, int16_t &w)
   return 0;
 }
 
-
-
 int16_t DFRobot_Display::limitPixel(int16_t &x, int16_t &y)
 {
   x += cursorX;
@@ -776,10 +763,7 @@ int16_t DFRobot_Display::limitPixel(int16_t &x, int16_t &y)
   return 0;
 }
 
-
 void DFRobot_Display::drawBuffer_16(int16_t x, int16_t y, uint16_t* pBuf, uint16_t count) {}
 
-
 void DFRobot_Display::drawBuffer_24(int16_t x, int16_t y, uint8_t* pBuf, uint16_t count) {}
-
 
