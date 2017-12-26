@@ -521,7 +521,7 @@ int32_t DFRobot_Display::readN(Stream * s, uint8_t* pBuf, int32_t length)
 
 int16_t DFRobot_Display::drawBmp(Stream *s, int16_t x, int16_t y)
 {
-  uint16_t        i = 0, j = 0, k = 0, z = 0;
+  uint16_t        i = 0, j = 0, k = 0;
   int32_t         picWidth = 0, picHeight = 0;
   uint8_t         colorBuf[4] = {0};
 
@@ -550,25 +550,16 @@ int16_t DFRobot_Display::drawBmp(Stream *s, int16_t x, int16_t y)
     k = picWidth * 3;
     uint8_t* colorDat = (uint8_t*) malloc(k);
     if(colorDat ==  NULL) {return DISPLAY_ERR_MEMOVER;}
-    uint8_t* colorMask = (uint8_t*) malloc(k);
-    if(colorDat ==  NULL) {return DISPLAY_ERR_MEMOVER;}
     for(i = 0; i < picHeight; i ++) {
       readN(s, colorDat,k);
-      for(j = 0; j < picWidth; j ++) {
-        z = j * 3;
-        colorMask[z] = colorDat[k - z - 3];
-        colorMask[z + 1] = colorDat[k - z + 1 - 3];
-        colorMask[z + 2] = colorDat[k - z + 2 - 3];
-      }
-      drawBuffer_24(x, y + (picHeight - i), colorMask, k);
+      drawBuffer_24(x, y + (picHeight - i), colorDat, k);
     }
     free(colorDat);
-    free(colorMask);
 #else
     for(i = 0; i < picHeight; i ++) {
       for(j = 0; j < picWidth; j ++) {
         readN(s, colorBuf, 3);
-        drawBuffer_24(x + (picWidth - j), y + (picHeight - i), colorBuf, 3);
+        drawBuffer_24(x, y + (picHeight - i), colorBuf, 3);
       }
     }
 #endif
