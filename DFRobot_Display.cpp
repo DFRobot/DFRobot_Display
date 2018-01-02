@@ -551,6 +551,9 @@ int16_t DFRobot_Display::drawBmp(Stream *s, int16_t x, int16_t y)
     uint8_t* colorDat = (uint8_t*) malloc(k);
     if(colorDat ==  NULL) {return DISPLAY_ERR_MEMOVER;}
     for(i = 0; i < picHeight; i ++) {
+      #ifdef __ets__
+        ESP.wdtFeed();
+      #endif
       readN(s, colorDat,k);
       drawBuffer_24(x, y + (picHeight - i), colorDat, k);
     }
