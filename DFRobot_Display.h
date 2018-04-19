@@ -67,6 +67,8 @@ class DFRobot_Display : public Print
 		
     eROTATION    getRotation(void);
     void         setTextColor(uint16_t color);
+    void         setTextBackground(uint16_t color);
+    int16_t      getTextBackground();
     int16_t      getTextColor(void);
     void         setTextSize(uint8_t size);
     uint8_t      getTextSize(void);
@@ -80,9 +82,11 @@ class DFRobot_Display : public Print
     void         getOrign(int16_t* pX, int16_t* pY);
     void         supportChineseFont(void);
 
-  protected:
     int16_t        width, height, rawWidth, rawHeight;
+    
+  protected:
     int16_t        textColor;
+    int16_t        textBackground;
     uint16_t       textSize;
     eROTATION      eRotation;
     eSHAPE         eShape;

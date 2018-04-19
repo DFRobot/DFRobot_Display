@@ -43,6 +43,7 @@ int16_t DFRobot_Display::drawText(int16_t* pX, int16_t* pY, const char* ch)
   while(*ch) {
     //get character
     rslt = pfCharacterFont((uint8_t*) ch, characterBuffer, &textWidth, &textHeight);
+    fillRect(*pX - cursorX, *pY - cursorY, textWidth * textSize, textHeight * textSize, textBackground);
 #ifdef _DEBUG
     _DEBUG_PRINT("\n  get character result :");
     _DEBUG_PRINTVAR(rslt, HEX);
@@ -616,6 +617,16 @@ void DFRobot_Display::setTextColor(uint16_t color)
 int16_t DFRobot_Display::getTextColor(void)
 {
   return textColor;
+}
+
+void DFRobot_Display::setTextBackground(uint16_t color)
+{
+  textBackground = color;
+}
+
+int16_t DFRobot_Display::getTextBackground()
+{
+  return textBackground;
 }
 
 void DFRobot_Display::setTextSize(uint8_t size)
