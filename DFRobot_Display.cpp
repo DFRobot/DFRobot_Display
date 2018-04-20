@@ -13,7 +13,7 @@ DFRobot_Display::DFRobot_Display(uint16_t width_, uint16_t height_)
 size_t DFRobot_Display::write(uint8_t ch)
 {
   _DEBUG_PRINT("\n  print char");
-  drawText(&printfX, &printfY, (const char*)ch);
+  drawText(&printfX, &printfY, (const char*)&ch);
   return 1;
 }
 
@@ -186,6 +186,7 @@ void DFRobot_Display::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
   int16_t       dx = abs(x1 - x0), dy = abs(y1 - y0);
   uint8_t       steep = 0;
 
+  eDirection_t  eDirection = calcLineDirection(x0, y0, x1, y1);
   if(dx < dy) {
     steep = 1;
     swap_int16(x0, y0);
@@ -207,7 +208,8 @@ void DFRobot_Display::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
         endY += dirY;
         var3 += var2;
       }
-      drawPixel(endY, endX, color);
+      // drawPixel(endY, endX, color);
+      drawPixelWidth(endY, endX, eDirection, color);
       endX += dirX;
     }
   } else {
@@ -218,7 +220,8 @@ void DFRobot_Display::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
         endY += dirY;
         var3 += var2;
       }
-      drawPixel(endX, endY, color);
+      // drawPixel(endX, endY, color);
+      drawPixelWidth(endX, endY, eDirection, color);
       endX += dirX;
     }
   }
@@ -639,6 +642,16 @@ uint8_t DFRobot_Display::getTextSize(void)
   return textSize;
 }
 
+void DFRobot_Display::setLineWidth(uint16_t w)
+{
+  lineWidth = w;
+}
+
+uint16_t DFRobot_Display::getLineWidth()
+{
+  return lineWidth;
+}
+
 int16_t DFRobot_Display::getWidth(void)
 {
   return width;
@@ -712,60 +725,6 @@ void DFRobot_Display::setOrign(int16_t x, int16_t y)
 void DFRobot_Display::getOrign(int16_t* pX, int16_t* pY)
 {
   *pX = printfX; *pY = printfY;
-}
-
-int16_t DFRobot_Display::limitVLine(int16_t &x, int16_t &y, int16_t &h)
-{
-  int16_t h_ = h,x_=x,y_=y,y0_,y1_;
-  if(h < 0){
-    h_ = -h;
-	y_ = y- h_ + 1;
-  }
-  x_ = x + cursorX;
-  y0_ = y_ + cursorY;
-  y1_ = y0_+h_-1;
-  
-  if((x_ < 0) || (x_ > width) ||  (y0_ > height) || (y1_ < 0)) {
-    _DEBUG_PRINT("\n  limitVLine faild");
-  	return -1;
-  }
-  if(y0_ < 0) y0_ = 0;
-  if(y1_ > height) y1_ = height;
-  x = x_;
-  y = y0_;
-  h = y1_-y0_+1;
-  return 0;
-}
-
-int16_t DFRobot_Display::limitHLine(int16_t & x, int16_t & y, int16_t &w)
-{
-	int16_t w_=w,x_=x,y_=y,x0_,x1_;
-	if(w < 0){
-	  w_ = -w;
-	  x_ = x- w_ + 1;
-	}
-	y_ = y + cursorY;
-	x0_ = x_ + cursorX;
-	x1_ = x0_+w_-1;
-	if((y_ < 0) || (y_ > height) ||  (x0_ > width) || (x1_ < 0)) {
-	  return -1;
-	}
-	if(x0_ < 0) x0_ = 0;
-	if(x1_ > width) x1_ = width;
-	x = x0_;
-	y = y_;
-	w = x1_-x0_+1;
-  return 0;
-}
-
-int16_t DFRobot_Display::limitPixel(int16_t &x, int16_t &y)
-{
-  x += cursorX;
-  y += cursorY;
-  if((x < 0) || (y > height) ||  (x > width) || (y < 0)) {
-    return -1;
-  }
-  return 0;
 }
 
 void DFRobot_Display::drawBuffer_16(int16_t x, int16_t y, uint16_t* pBuf, uint16_t count) {}

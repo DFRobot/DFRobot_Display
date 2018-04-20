@@ -338,16 +338,16 @@ int16_t drawBmp(Stream *s, int16_t x, int16_t y);
 int16_t drawBmp(uint8_t* pData, int16_t x, int16_t y, uint16_t w, uint16_t h, uint16_t color);
 
 /*
- * @brief invertDisplay
+ * @brief get screen width
  *
- * @param eInvert       
+ * @return screen width     
  */
 int16_t getWidth(void);
 
 /*
  * @brief Get screen hight
  *
- * @return The  screen hight
+ * @return The screen hight
  */
 int16_t getHeight(void);
 
@@ -355,6 +355,89 @@ int16_t getHeight(void);
  * @brief support chinese font IC
  */
 void supportChineseFont(void);
+
+/*
+ * @brief set line width (only for function drawLine now)
+ *
+ * @param w       line width
+ */
+void setLineWidth(uint16_t w);
+
+/*
+ * @brief Get line width
+ *
+ * @return line width
+ */
+uint16_t getLineWidth(void);
+
+```
+
+```C++
+
+/*
+ * @brief create a clock object
+ */
+#include "DFRobot_Display_Clock.h" 
+
+DFRobot_Display_Clock(DFRobot_Display* pDisplay);
+
+/*
+ * @brief set pointer length
+ *
+ * @param hl        hour pointer length
+ *        ml        minute pointer length
+ *        sl        second pointer length
+ */
+void setPointerLength(uint16_t hl, uint16_t ml, uint16_t sl);
+
+/*
+ * @brief set pointer color
+ *
+ * @param hc        hour pointer color
+ *        mc        minute pointer color
+ *        sc        second pointer color
+ */
+void setPointerColor(uint16_t hc, uint16_t mc, uint16_t sc);
+
+/*
+ * @brief set pointer width
+ *
+ * @param hw        hour pointer width
+ *        mw        minute pointer width
+ *        sw        second pointer width
+ */
+void setPointerWidth(uint16_t hw, uint16_t mw, uint16_t sw);
+
+/*
+ * @brief set clock dial
+ *
+ * @param x        clock dial position x
+ *        y        clock dial position y
+ *        r        clock dial radius r
+ */
+void setClockDial(int16_t x, int16_t y, uint16_t r);
+
+/*
+ * @brief set clock dial color
+ *
+ * @param border        border color
+ *        background    dial background color
+ */
+void setDialColor(uint16_t border, uint16_t background);
+
+/*
+ * @brief make clock dial
+ */
+void showDial();
+
+/*
+ * @brief update clock
+ *
+ * @param h        time hour
+ *        m        time minute
+ *        s        time second
+ */
+void updateClock(uint8_t h, uint8_t m, uint8_t s);
 
 ```
 

@@ -29,6 +29,10 @@
 
 #define swap_int16(a, b) { int16_t t = a; a = b; b = t; }
 
+typedef enum {
+  eDIRECTION_VERTICAL,
+  eDIRECTION_HORIZONTAL
+} eDirection_t;
 
 class DFRobot_Display : public Print
 {
@@ -72,6 +76,8 @@ class DFRobot_Display : public Print
     int16_t      getTextColor(void);
     void         setTextSize(uint8_t size);
     uint8_t      getTextSize(void);
+    void         setLineWidth(uint16_t w);
+    uint16_t     getLineWidth();
     int16_t      getWidth(void);
     int16_t      getHeight(void);
     void         setCursor(int16_t x, int16_t y);
@@ -92,12 +98,10 @@ class DFRobot_Display : public Print
     eSHAPE         eShape;
     int16_t        cursorX, cursorY;
     uint16_t       displayRadius;
+    uint16_t       lineWidth;
     
     pfCharacterFont_t		pfCharacterFont;
 
-    int16_t      limitVLine(int16_t& x, int16_t& y, int16_t& h);
-    int16_t      limitHLine(int16_t& x, int16_t& y, int16_t& w);
-    int16_t      limitPixel(int16_t& x, int16_t & y);
     void         setDisplayShape(eSHAPE eShape);
 
     void         fillCircleHelper(int16_t x0, int16_t y0, int16_t r,
@@ -108,9 +112,81 @@ class DFRobot_Display : public Print
     int32_t      readN(Stream * s, uint8_t* pBuf, int32_t length);
     size_t       write(uint8_t ch);
     size_t       write(const uint8_t* pCh, size_t size);
-
-  private:
     int16_t      printfX, printfY;
+
+    int16_t limitVLine(int16_t &x, int16_t &y, int16_t &h)
+    {
+      int16_t h_ = h,x_=x,y_=y,y0_,y1_;
+      if(h < 0){
+        h_ = -h;
+      y_ = y- h_ + 1;
+      }
+      x_ = x + cursorX;
+      y0_ = y_ + cursorY;
+      y1_ = y0_+h_-1;
+      
+      if((x_ < 0) || (x_ > width) ||  (y0_ > height) || (y1_ < 0)) {
+        _DEBUG_PRINT("\n  limitVLine faild");
+        return -1;
+      }
+      if(y0_ < 0) y0_ = 0;
+      if(y1_ > height) y1_ = height;
+      x = x_;
+      y = y0_;
+      h = y1_-y0_+1;
+      return 0;
+    }
+
+    int16_t limitHLine(int16_t & x, int16_t & y, int16_t &w)
+    {
+      int16_t w_=w,x_=x,y_=y,x0_,x1_;
+      if(w < 0){
+        w_ = -w;
+        x_ = x- w_ + 1;
+      }
+      y_ = y + cursorY;
+      x0_ = x_ + cursorX;
+      x1_ = x0_+w_-1;
+      if((y_ < 0) || (y_ > height) ||  (x0_ > width) || (x1_ < 0)) {
+        return -1;
+      }
+      if(x0_ < 0) x0_ = 0;
+      if(x1_ > width) x1_ = width;
+      x = x0_;
+      y = y_;
+      w = x1_-x0_+1;
+      return 0;
+    }
+
+    int16_t limitPixel(int16_t &x, int16_t &y)
+    {
+      x += cursorX;
+      y += cursorY;
+      if((x < 0) || (y > height) ||  (x > width) || (y < 0)) {
+        return -1;
+      }
+      return 0;
+    }
+
+    eDirection_t calcLineDirection(int16_t x0, int16_t y0, int16_t x1, int16_t y1)
+    {
+      if(abs(abs(x0) - abs(x1)) > abs(abs(y0) - abs(y1)))
+        return eDIRECTION_VERTICAL;
+      return eDIRECTION_HORIZONTAL;
+    }
+
+    void drawPixelWidth(int16_t x, int16_t y, eDirection_t eDirection, uint16_t color)
+    {
+      if(lineWidth == 1) {
+        drawPixel(x, y, color);
+      } else if(lineWidth > 1) {
+        if(eDirection == eDIRECTION_HORIZONTAL) {
+          drawHLine(x - (lineWidth / 2), y, lineWidth, color);
+        } else {
+          drawVLine(x, y - (lineWidth / 2), lineWidth, color);
+        }
+      }
+    }
 };
 
 #endif

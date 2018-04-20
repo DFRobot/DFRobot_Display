@@ -41,6 +41,8 @@ drawBmp	KEYWORD3
 getRotation	KEYWORD3
 setTextColor	KEYWORD3
 getTextColor	KEYWORD3
+setTextBackground	KEYWORD3
+getTextBackground	KEYWORD3
 setTextSize	KEYWORD3
 getTextSize	KEYWORD3
 getWidth	KEYWORD3
@@ -52,3 +54,13 @@ getDisplayRadius	KEYWORD3
 setOrign	KEYWORD3
 getOrign	KEYWORD3
 supportChineseFont	KEYWORD3
+setLineWidth	KEYWORD3
+getLineWidth	KEYWORD3
+
+setPointerLength	KEYWORD3
+setPointerColor	KEYWORD3
+setPointerWidth	KEYWORD3
+setClockDial	KEYWORD3
+setDialColor	KEYWORD3
+showDial	KEYWORD3
+updateClock	KEYWORD3

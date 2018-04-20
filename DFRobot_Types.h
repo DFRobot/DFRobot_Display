@@ -4,14 +4,16 @@
 #include "stdint.h"
 #include "stdlib.h"
 
-//#define _DEBUG
+#define _DEBUG        0
 
-#ifdef _DEBUG
+#if _DEBUG
 #define _DEBUG_PRINT(x)          Serial.print(x)
 #define _DEBUG_PRINTVAR(x, y)    Serial.print(x, y)
+#define _DEBUG_CODE(x)           x
 #else
 #define _DEBUG_PRINT(x)
 #define _DEBUG_PRINTVAR(x, y)
+#define _DEBUG_CODE(x)
 #endif
 
 #define DISPLAY_ERR_OK                0
