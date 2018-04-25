@@ -64,3 +64,4 @@ setClockDial	KEYWORD3
 setDialColor	KEYWORD3
 showDial	KEYWORD3
 updateClock	KEYWORD3
+
