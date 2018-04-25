@@ -8,6 +8,7 @@ DFRobot_Display::DFRobot_Display(uint16_t width_, uint16_t height_)
   rawHeight = height - 1;
   textSize = 1;
   pfCharacterFont = DFRobot_Character_getCharacter;
+  lineWidth = 1;
 }
 
 size_t DFRobot_Display::write(uint8_t ch)
