@@ -316,7 +316,7 @@ int16_t getWidth(void);
 int16_t getHeight(void);
 
 /*
- * @brief Display bmp file
+ * @brief Display bmp file (24bits SD card bmp file)
  *
  * @param s       file objectiv
  *        x       The x-axis of the starting point
@@ -329,13 +329,25 @@ int16_t drawBmp(Stream *s, int16_t x, int16_t y);
 /*
  * @brief Display bmp file
  *
- * @param pData   bmp arry list
+ * @param pData   bmp array list (single bit color)
+ *        x       The x-axis of the starting point
+ *        y       The y-axis of the starting point
+ *        w       bmp width
+ *        h       bmp height
+ *        size    magnification multiple
+ */
+int16_t drawBmp(uint8_t* pData, int16_t x, int16_t y, uint16_t w, uint16_t h, uint8_t size, uint16_t color);
+
+/*
+ * @brief Display bmp file
+ *
+ * @param pData   bmp array list (24bits color)
  *        x       The x-axis of the starting point
  *        y       The y-axis of the starting point
  *        w       bmp width
  *        h       bmp height
  */
-int16_t drawBmp(uint8_t* pData, int16_t x, int16_t y, uint16_t w, uint16_t h, uint16_t color);
+int16_t drawBmp(uint8_t* pData, int16_t x, int16_t y, uint16_t w, uint16_t h);
 
 /*
  * @brief get screen width

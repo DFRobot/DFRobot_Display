@@ -595,6 +595,14 @@ void DFRobot_Display::drawBmp(uint8_t* pData, int16_t x, int16_t y, uint16_t w, 
   }
 }
 
+void DFRobot_Display::drawBmp(uint8_t* pData, int16_t x, int16_t y, uint16_t w, uint16_t h)
+{
+  int16_t       i = 0;
+  for(i = 0; i < h; i ++) {
+    drawBuffer_24(x, y + i, pData + i * w * 3, w * 3);
+  }
+}
+
 int16_t DFRobot_Display::setRotaion(eROTATION eRotation_)
 {
   switch(eRotation) {
@@ -728,7 +736,15 @@ void DFRobot_Display::getOrign(int16_t* pX, int16_t* pY)
   *pX = printfX; *pY = printfY;
 }
 
-void DFRobot_Display::drawBuffer_16(int16_t x, int16_t y, uint16_t* pBuf, uint16_t count) {}
+void DFRobot_Display::drawBuffer_16(int16_t x, int16_t y, uint16_t* pBuf, uint16_t count)
+{
 
-void DFRobot_Display::drawBuffer_24(int16_t x, int16_t y, uint8_t* pBuf, uint16_t count) {}
+}
+
+void DFRobot_Display::drawBuffer_24(int16_t x, int16_t y, uint8_t* pBuf, uint16_t count)
+{
+  uint16_t        i = 0;
+  for(i = 0; i < (count / 3); i ++)
+    drawPixel(x + i, y, color24To16(pBuf[i * 3], pBuf[i * 3 + 1], pBuf[i * 3 + 2]));
+}
 

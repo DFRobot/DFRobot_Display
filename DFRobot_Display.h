@@ -68,6 +68,7 @@ class DFRobot_Display : public Print
     int16_t             drawBmp(Stream *s, int16_t x, int16_t y);
     void                drawBmp(uint8_t* pData, int16_t x, int16_t y, uint16_t w, uint16_t h,
                                 uint8_t size, uint16_t color);
+    void                drawBmp(uint8_t* pData, int16_t x, int16_t y, uint16_t w, uint16_t h);
 		
     eROTATION    getRotation(void);
     void         setTextColor(uint16_t color);
@@ -186,6 +187,11 @@ class DFRobot_Display : public Print
           drawVLine(x, y - (lineWidth / 2), lineWidth, color);
         }
       }
+    }
+
+    uint16_t color24To16(uint8_t r, uint8_t g, uint8_t b)
+    {
+      return (uint16_t)((((uint16_t)r >> 3) << 11) | (((uint16_t)g >> 2) << 5) | ((uint16_t)b >> 3));
     }
 };
 
