@@ -1,8 +1,8 @@
 #ifndef DFROBOT_GT30L_H
 #define DFROBOT_GT30L_H
 
-#include "Arduino.h"
-#include "SPI.h"
+#include <Arduino.h>
+#include <SPI.h>
 #include "DFRobot_Types.h"
 
 #define USE_GT30L
