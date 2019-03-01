@@ -286,79 +286,78 @@ void DFRobot_Display::drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y
 }
 
 
-void DFRobot_Display::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, 
-                                               int16_t x2, int16_t y2, uint16_t color)
+void DFRobot_Display::fillTriangle(int16_t x, int16_t y, int16_t x1, int16_t y1, 
+                                              int16_t x2, int16_t y2, uint16_t color)
 {
-  int16_t a, b, y, last;
-  // Sort coordinates by Y order (y2 >= y1 >= y0)
-  if (y0 > y1) {
-    swap_int16(y0, y1); swap_int16(x0, x1);
+  drawLine(x, y, x1, y1, color);
+  drawLine(x1, y1, x2, y2, color);
+  drawLine(x2, y2, x, y, color);
+  int temp = lineWidth;
+  lineWidth = 1
+  if( x == x1 && x == x2) {
+    int ymax = max([y, y1, y2]);
+    int ymin = min([y, y1, y2]);
+    drawHLine(x, ymin, ymax - ymin, color);
+    lineWidth = temp;
+    return;
   }
-  if (y1 > y2) {
-    swap_int16(y2, y1); swap_int16(x2, x1);
-  }
-  if (y0 > y1) {
-    swap_int16(y0, y1); swap_int16(x0, x1);
-  }
-
-  if(y0 == y2) { // Handle awkward all-on-same-line case as its own thing
-    a = b = x0;
-    if(x1 < a)      a = x1;
-    else if(x1 > b) b = x1;
-    if(x2 < a)      a = x2;
-    else if(x2 > b) b = x2;
-    drawHLine(a, y0, b-a+1, color);
+  if (y == y1 && y == y2) {
+    int xmax = max([x, x1, x2]);
+    int xmin = max([x, x1, x2]);
+    self.VLine(xmin, y, xmax - xmin, color);
+    self._lineWidth = temp;
     return;
   }
 
-  int16_t dx01 = x1 - x0;
-  int16_t dy01 = y1 - y0;
-  int16_t dx02 = x2 - x0;
-  int16_t dy02 = y2 - y0;
-  int16_t dx12 = x2 - x1;
-  int16_t dy12 = y2 - y1;
-  int32_t sa   = 0;
-  int32_t sb   = 0;
-
-  // For upper part of triangle, find scanline crossings for segments
-  // 0-1 and 0-2.  If y1=y2 (flat-bottomed triangle), the scanline y1
-  // is included here (and second loop will be skipped, avoiding a /0
-  // error there), otherwise scanline y1 is skipped here and handled
-  // in the second loop...which also avoids a /0 error here if y0=y1
-  // (flat-topped triangle).
-  if(y1 == y2) last = y1;   // Include y1 scanline
-  else         last = y1-1; // Skip it
-
-  if(dy01 == 0 || dy02 == 0) {return;}
-  for(y=y0; y<=last; y++) {
-    a   = x0 + sa / dy01;
-    b   = x0 + sb / dy02;
-    sa += dx01;
-    sb += dx02;
-    /* longhand:
-    a = x0 + (x1 - x0) * (y - y0) / (y1 - y0);
-    b = x0 + (x2 - x0) * (y - y0) / (y2 - y0);
-    */
-    if(a > b) swap_int16(a,b);
-    drawHLine(a, y, b-a+1, color);
+  int direction = 1;
+  if (y == y1 || y1 == y2 || y == y2) {
+    if (y == y1) {
+      swap_int16(x, x2);
+      swap_int16(y, y2);
+    } else if (y == y2) {
+      swap_int16(x, x1);
+      swap_int16(y, y1);
+    }
+    if (y > y1) {
+      direction = -1;
+    }
+    if (x1 > x2) {
+      swap_int16(x1, x2);
+      swap_int16(y1, y2);
+    }
+  } else {
+    if (y > y1) {
+      swap_int16(x, x1);
+      swap_int16(y, y1);
+    }
+    if (y > y2) {
+      swap_int16(x, x2);
+      swap_int16(y, y2);
+    }
+    if (y1 > y2) {
+      swap_int16(x1, x2);
+      swap_int16(y1, y2);
+    }
   }
 
-  // For lower part of triangle, find scanline crossings for segments
-  // 0-2 and 1-2.  This loop is skipped if y1=y2.
-  sa = dx12 * (y - y1);
-  sb = dx02 * (y - y0);
-  for(; y<=y2; y++) {
-    a   = x1 + sa / dy12;
-    b   = x0 + sb / dy02;
-    sa += dx12;
-    sb += dx02;
-    /* longhand:
-    a = x1 + (x2 - x1) * (y - y1) / (y2 - y1);
-    b = x0 + (x2 - x0) * (y - y0) / (y2 - y0);
-    */
-    if(a > b) swap_int16(a,b);
-    drawHLine(a, y, b-a+1, color);
+  dx1 = x1 - x;
+  dx2 = x2 - x;
+  dx3 = x2 - x1;
+  dy1 = y1 - y;
+  dy2 = y2 - y;
+  dy3 = y2 - y1;
+  if (direction == 1) {
+    for(int i = 0; i < dy1; i ++)
+      drawHLine(x + dx1 * i / dy1, y + i, (x + dx2 * i / dy2) - (x + dx1 * i / dy1) + 1, color);
+    for(int i = 0; i < dy3; i ++)
+      drawHLine(x1 + dx3 * i / dy3, y1 + i, (x + dx2 * (i + dy1) / dy2) - (x1 + dx3 * i / dy3) + 1, color);
+  } else {
+    y = y1 + dy1;
+    dy1 = - dy1;
+    for(int i = 0; i < dy1; i ++)
+      drawHLine(x + dx1 * i / dy1, y1 + dy1 - i, (x + dx2 * i / dy1) - (x + dx1 * i / dy1) + 1, color);
   }
+  lineWidth = temp
 }
 
 void DFRobot_Display::drawRoundRect(int16_t x, int16_t y, int16_t w,
