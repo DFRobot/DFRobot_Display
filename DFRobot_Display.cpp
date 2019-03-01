@@ -357,7 +357,7 @@ void DFRobot_Display::fillTriangle(int16_t x, int16_t y, int16_t x1, int16_t y1,
     for(int i = 0; i < dy1; i ++)
       drawHLine(x + dx1 * i / dy1, y1 + dy1 - i, (x + dx2 * i / dy1) - (x + dx1 * i / dy1) + 1, color);
   }
-  lineWidth = temp
+  lineWidth = temp;
 }
 
 void DFRobot_Display::drawRoundRect(int16_t x, int16_t y, int16_t w,
