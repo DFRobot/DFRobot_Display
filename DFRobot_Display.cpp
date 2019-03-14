@@ -293,19 +293,35 @@ void DFRobot_Display::fillTriangle(int16_t x, int16_t y, int16_t x1, int16_t y1,
   drawLine(x1, y1, x2, y2, color);
   drawLine(x2, y2, x, y, color);
   int temp = lineWidth;
-  lineWidth = 1
+  lineWidth = 1;
   if( x == x1 && x == x2) {
-    int ymax = max([y, y1, y2]);
-    int ymin = min([y, y1, y2]);
+    int ymax = y;
+    if(ymax < y1)
+      ymax = y1;
+    if(ymax < y2)
+      ymax = y2;
+    int ymin = y;
+    if(ymin > y1)
+      ymin = y1;
+    if(ymin > y2)
+      ymin = y2;
     drawHLine(x, ymin, ymax - ymin, color);
     lineWidth = temp;
     return;
   }
   if (y == y1 && y == y2) {
-    int xmax = max([x, x1, x2]);
-    int xmin = max([x, x1, x2]);
-    self.VLine(xmin, y, xmax - xmin, color);
-    self._lineWidth = temp;
+    int xmax = y;
+    if(xmax < y1)
+      xmax = y1;
+    if(xmax < y2)
+      xmax = y2;
+    int xmin = y;
+    if(xmin > y1)
+      xmin = y1;
+    if(xmin > y2)
+      xmin = y2;
+    drawVLine(xmin, y, xmax - xmin, color);
+    lineWidth = temp;
     return;
   }
 
@@ -340,12 +356,12 @@ void DFRobot_Display::fillTriangle(int16_t x, int16_t y, int16_t x1, int16_t y1,
     }
   }
 
-  dx1 = x1 - x;
-  dx2 = x2 - x;
-  dx3 = x2 - x1;
-  dy1 = y1 - y;
-  dy2 = y2 - y;
-  dy3 = y2 - y1;
+  int dx1 = x1 - x;
+  int dx2 = x2 - x;
+  int dx3 = x2 - x1;
+  int dy1 = y1 - y;
+  int dy2 = y2 - y;
+  int dy3 = y2 - y1;
   if (direction == 1) {
     for(int i = 0; i < dy1; i ++)
       drawHLine(x + dx1 * i / dy1, y + i, (x + dx2 * i / dy2) - (x + dx1 * i / dy1) + 1, color);
